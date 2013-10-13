@@ -10,6 +10,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -33,11 +34,10 @@ public class PhotoVision extends JFrame{
    
    private JMenuBar menuBar;
    
-   private JFrame[] JFrames;
+   private JDesktopPane desktop;
    
    public PhotoVision(){
       controller = new Controller(this);
-      JFrames = new JFrame[10];
       
       initializeComponents();
       
@@ -55,8 +55,14 @@ public class PhotoVision extends JFrame{
       mainLayout = new BorderLayout();
       setLayout (mainLayout);
       
-      createMenu();
+      desktop = new JDesktopPane ();
+      desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+      add (desktop, BorderLayout.CENTER);
       
+      desktop.setVisible (true);
+      
+      
+      createMenu();
       
    }
    
@@ -79,15 +85,11 @@ public class PhotoVision extends JFrame{
    }
    
    public void popImage(File file){
-      JFrame out = new JFrame();
-      out.add (new ImagePanel(file));
-      out.setSize ( WSX, WSY );
-      out.setTitle( "FotoReVisión" );
-      out.setLocationRelativeTo ( null );
-      out.setVisible(true);
+      desktop.add (new InnerFrame ("Photo", controller.newImagePanel (file)));
    }
    
    public void chartTest(){
+      
       Plot plot = Plots.newPlot(Data.newData(0, 66.6, 33.3, 100));
       LineChart chart = GCharts.newLineChart(plot);
       
