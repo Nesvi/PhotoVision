@@ -6,7 +6,7 @@ public class Main {
     * @param args
     */
    public static void main (String[] args) {
-      FotoReVision myWindow = new FotoReVision();
+      PhotoVision myWindow = new PhotoVision();
 
    }
 

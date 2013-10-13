@@ -7,9 +7,9 @@ import javax.swing.JFileChooser;
 
 public class Controller {
 
-   private FotoReVision view;
+   private PhotoVision view;
    
-   Controller(FotoReVision fr){
+   Controller(PhotoVision fr){
       view = fr;
    }
    

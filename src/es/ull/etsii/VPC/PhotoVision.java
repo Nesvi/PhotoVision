@@ -22,7 +22,7 @@ import com.googlecode.charts4j.LineChart;
 import com.googlecode.charts4j.Plot;
 import com.googlecode.charts4j.Plots;
 
-public class FotoReVision extends JFrame{
+public class PhotoVision extends JFrame{
 
    private static final int WSX = 500;
    private static final int WSY = 500;
@@ -35,7 +35,7 @@ public class FotoReVision extends JFrame{
    
    private JFrame[] JFrames;
    
-   public FotoReVision(){
+   public PhotoVision(){
       controller = new Controller(this);
       JFrames = new JFrame[10];
       
