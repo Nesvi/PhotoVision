@@ -21,4 +21,8 @@ public class Controller {
 	 view.popImage (file);
       }
    }
+   
+   public void convertToGrey(){
+	   
+   }
 }
