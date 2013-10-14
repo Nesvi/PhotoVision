@@ -18,27 +18,32 @@ public class ImagePanel extends JPanel{
    public ImagePanel(){
       image = null;
    }
-    public ImagePanel(File file) {
+   
+   public ImagePanel(File file) {
        try {                
           image = ImageIO.read(file);
        } catch (IOException ex) {
             // handle exception...
        }
-    }
+   }
 
-    public void setImage(File file){
+   public ImagePanel(BufferedImage img) {
+      image = img;
+  }
+
+   public void setImage(File file){
        try {                
           image = ImageIO.read(file);
           invalidate();
        } catch (IOException ex) {
             // handle exception...
        }
-    }
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if(image != null)
-        g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters            
-    }
+   }
+   @Override
+   protected void paintComponent(Graphics g) {
+       super.paintComponent(g);
+       if(image != null)
+       g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters            
+   }
 
 }

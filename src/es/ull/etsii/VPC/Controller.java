@@ -21,7 +21,7 @@ public class Controller {
       
       if( openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 	 File file = openFile.getSelectedFile ();
-	 view.popImage (file);
+	 view.newImageInnerFrame (file);
       }
    }
    

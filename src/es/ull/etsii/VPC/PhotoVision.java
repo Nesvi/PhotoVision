@@ -3,6 +3,7 @@ package es.ull.etsii.VPC;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -18,6 +19,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import com.googlecode.charts4j.Data;
+import com.googlecode.charts4j.DataUtil;
 import com.googlecode.charts4j.GCharts;
 import com.googlecode.charts4j.LineChart;
 import com.googlecode.charts4j.Plot;
@@ -84,30 +86,34 @@ public class PhotoVision extends JFrame{
    
    }
    
-   public void popImage(File file){
+   public void newImageInnerFrame(File file){
       desktop.add (new InnerFrame ("Photo", controller.newImagePanel (file)));
+   }
+   
+   public void newChartInnerFrame(BufferedImage img){
+      InnerFrame chartFrame = new InnerFrame ("Chart", new ImagePanel (img));
+      chartFrame.setSize (300, 300);
+      desktop.add (chartFrame);
    }
    
    public void chartTest(){
       
-      Plot plot = Plots.newPlot(Data.newData(0, 66.6, 33.3, 100));
-      LineChart chart = GCharts.newLineChart(plot);
+      double[] chartData = new double[256];
+      for( int i = 0; i < 256; i++){
+	 chartData[i] = i*i;
+      }
       
-      JFrame frame = new JFrame();
-      JLabel label = null;
+      Plot plot = Plots.newPlot(DataUtil.scale (chartData));
+      LineChart chart = GCharts.newLineChart(plot);
+      chart.setSize (300, 300);
       
       try {
-	 label = new JLabel(new ImageIcon(ImageIO.read(new URL(chart.toURLString ()))));
-	 System.out.println (chart.toURLString ());
+	 newChartInnerFrame (ImageIO.read(new URL(chart.toURLString ())));
       } catch (MalformedURLException e) {
 	 e.printStackTrace();
       } catch (IOException e) {
 	 e.printStackTrace();
       }
-      
-      frame.getContentPane().add(label, BorderLayout.CENTER);
-      frame.pack();
-      frame.setVisible(true);
    
    }
 
