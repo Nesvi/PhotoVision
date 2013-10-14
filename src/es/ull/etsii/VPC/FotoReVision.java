@@ -88,12 +88,7 @@ public class FotoReVision extends JFrame{
    
    public void popImage(File file) throws IOException{
       JFrame out = new JFrame();
-      //out.add (new ImagePanel(file));
-      //test greyscale
-      BufferedImage image;
-      image = ImageIO.read(file);
-      out.add (new ImagePanel(convertToGrey(image)));
-      //
+      out.add (new ImagePanel(file));
       out.setSize ( WSX, WSY );
       out.setTitle( "FotoReVision" );
       out.setLocationRelativeTo ( null );
@@ -143,6 +138,8 @@ public class FotoReVision extends JFrame{
            }
        }
 	   
+       
+       //Posible ayuda para el histograma
 	   /*
 	   int levels = 256;
        int bands = raster.getNumBands();
