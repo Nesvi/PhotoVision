@@ -25,6 +25,11 @@ public class ImagePanel extends JPanel{
             // handle exception...
        }
     }
+    
+    
+    public ImagePanel(BufferedImage img) {         //constructor thar receives a BufferedImage      
+    	image = img;
+    }
 
     public void setImage(File file){
        try {                

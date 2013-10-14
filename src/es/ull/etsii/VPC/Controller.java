@@ -1,9 +1,9 @@
 package es.ull.etsii.VPC;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
-
 
 public class Controller {
 
@@ -13,7 +13,7 @@ public class Controller {
       view = fr;
    }
    
-   public void openFile(){
+   public void openFile() throws IOException{
       JFileChooser openFile = new JFileChooser();
       
       if( openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
@@ -22,7 +22,4 @@ public class Controller {
       }
    }
    
-   public void convertToGrey(){
-	   
-   }
 }

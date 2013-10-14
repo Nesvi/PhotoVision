@@ -3,6 +3,9 @@ package es.ull.etsii.VPC;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -43,7 +46,7 @@ public class FotoReVision extends JFrame{
       
       setSize ( WSX, WSY );
       setDefaultCloseOperation ( EXIT_ON_CLOSE );
-      setTitle( "FotoReVisión" );
+      setTitle( "FotoReVision" );
       setLocationRelativeTo ( null );
       setVisible(true);
       
@@ -72,17 +75,27 @@ public class FotoReVision extends JFrame{
       mFile.add (mOpenFile);
       mOpenFile.addActionListener (new ActionListener() {
          public void actionPerformed (ActionEvent arg0) {
-            controller.openFile();            
+            try {
+				controller.openFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}            
          }
       });
    
    }
    
-   public void popImage(File file){
+   public void popImage(File file) throws IOException{
       JFrame out = new JFrame();
-      out.add (new ImagePanel(file));
+      //out.add (new ImagePanel(file));
+      //test greyscale
+      BufferedImage image;
+      image = ImageIO.read(file);
+      out.add (new ImagePanel(convertToGrey(image)));
+      //
       out.setSize ( WSX, WSY );
-      out.setTitle( "FotoReVisión" );
+      out.setTitle( "FotoReVision" );
       out.setLocationRelativeTo ( null );
       out.setVisible(true);
    }
@@ -107,6 +120,51 @@ public class FotoReVision extends JFrame{
       frame.pack();
       frame.setVisible(true);
    
+   }
+   
+   
+   public BufferedImage convertToGrey(BufferedImage img) throws IOException{ //converts the image to grey scale
+	   int width, height;
+	   
+	    BufferedImage colorFrame;
+	     BufferedImage grayFrame = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+	   
+	   WritableRaster  raster = grayFrame.getRaster();
+	   
+       for(int x = 0; x < raster.getWidth(); x++) {
+           for(int y = 0; y < raster.getHeight(); y++){
+               int argb = img.getRGB(x,y);
+               int r = (argb >> 16) & 0xff;
+               int g = (argb >>  8) & 0xff;
+               int b = (argb      ) & 0xff;
+
+               int l = (int) (.299 * r + .587 * g + .114 * b);
+               raster.setSample(x, y, 0, l);
+           }
+       }
+	   
+	   /*
+	   int levels = 256;
+       int bands = raster.getNumBands();
+       int histogram[][] = new int[bands][levels];
+       
+       for (int x = raster.getMinX(); x < raster.getWidth(); x++) {
+           for (int y = raster.getMinY(); y < raster.getHeight(); y++) {
+               for (int b = 0; b < 3; b++) {
+                   int p = raster.getSample(x, y, b);
+                   histogram[b][p]++;
+               }
+           }
+       }
+       
+       for (int b=0;b<histogram.length;b++) {
+           System.out.println("Band:"+b);
+           for (int i=0;i<histogram[b].length;i++) {
+             System.out.println("\t"+i+"="+histogram[b][i]);
+           }
+       }
+   */
+       return grayFrame;
    }
 
 }
