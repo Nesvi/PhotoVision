@@ -1,16 +1,22 @@
 package es.ull.etsii.VPC;
 
 import java.io.File;
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+import java.util.Vector;
+>>>>>>> branch 'debugNesvi' of https://github.com/Nesvi/PhotoVision.git
 
 import javax.swing.JFileChooser;
 
 public class Controller {
 
-   private FotoReVision view;
+   private PhotoVision view;
+   private Vector<ImagePanel> images;
    
-   Controller(FotoReVision fr){
+   Controller(PhotoVision fr){
       view = fr;
+      images = new Vector<ImagePanel>();
    }
    
    public void openFile() throws IOException{
@@ -18,8 +24,21 @@ public class Controller {
       
       if( openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 	 File file = openFile.getSelectedFile ();
-	 view.popImage (file);
+	 view.newImageInnerFrame (file);
       }
    }
    
+<<<<<<< HEAD
+=======
+   public ImagePanel newImagePanel(File file){
+   
+      images.add(new ImagePanel (file));
+      return images.get (images.size ()-1);
+      
+   }
+   
+   public void convertToGrey(){
+	   
+   }
+>>>>>>> branch 'debugNesvi' of https://github.com/Nesvi/PhotoVision.git
 }
