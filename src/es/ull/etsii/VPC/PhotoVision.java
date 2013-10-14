@@ -48,8 +48,6 @@ public class PhotoVision extends JFrame{
       setTitle( "FotoReVisión" );
       setLocationRelativeTo ( null );
       setVisible(true);
-      
-      chartTest ();
    }
    
    public void initializeComponents(){
@@ -87,7 +85,9 @@ public class PhotoVision extends JFrame{
    }
    
    public void newImageInnerFrame(File file){
-      desktop.add (new InnerFrame ("Photo", controller.newImagePanel (file)));
+      ImagePanel panel = controller.newImagePanel (file);
+      desktop.add (new InnerFrame ("Photo", panel));
+      absoluteHistogram(panel.getImage ());//Provisional
    }
    
    public void newChartInnerFrame(BufferedImage img){
@@ -96,12 +96,14 @@ public class PhotoVision extends JFrame{
       desktop.add (chartFrame);
    }
    
-   public void chartTest(){
-      
+   public void absoluteHistogram(BufferedImage img){//Move to controller
+      /*
       double[] chartData = new double[256];
       for( int i = 0; i < 256; i++){
 	 chartData[i] = i*i;
       }
+      */
+      double[] chartData = Operations.getAbsoluteHistogramData (img);
       
       Plot plot = Plots.newPlot(DataUtil.scale (chartData));
       LineChart chart = GCharts.newLineChart(plot);

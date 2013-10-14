@@ -1,5 +1,6 @@
 package es.ull.etsii.VPC;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
@@ -31,5 +32,21 @@ public class Operations {
 	 }
       }
       return grayFrame;
+   }
+   
+   public static double[] getAbsoluteHistogramData (BufferedImage img){ // converts image into greyscale
+      
+      double[] output = new double[256];
+      
+      for( int i = 0; i < 256; i++)
+	 output[i] = 0;
+      Color color;
+      for( int i = 0; i < img.getWidth (); i++)
+	 for( int j = 0; j < img.getHeight (); j++){
+	    color = new Color (img.getRGB (i, j),true);
+	    output[color.getRed ()]++;
+	 }
+      
+      return output;
    }
 }

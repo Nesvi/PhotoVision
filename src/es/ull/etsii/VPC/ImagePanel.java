@@ -23,13 +23,14 @@ public class ImagePanel extends JPanel{
        try {                
           //image = ImageIO.read(file);
           image = Operations.convertToGrey (ImageIO.read(file));//Provisional
+          Operations.getAbsoluteHistogramData (image);
        } catch (IOException ex) {
             // handle exception...
        }
    }
 
    public ImagePanel(BufferedImage img) {
-      image = Operations.convertToGrey (img);//Provisional
+      image = img;
   }
 
    public void setImage(File file){
@@ -39,6 +40,10 @@ public class ImagePanel extends JPanel{
        } catch (IOException ex) {
             // handle exception...
        }
+   }
+   
+   public BufferedImage getImage(){
+      return image;
    }
    @Override
    protected void paintComponent(Graphics g) {
