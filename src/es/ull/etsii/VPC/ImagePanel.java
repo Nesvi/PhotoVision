@@ -21,14 +21,15 @@ public class ImagePanel extends JPanel{
    
    public ImagePanel(File file) {
        try {                
-          image = ImageIO.read(file);
+          //image = ImageIO.read(file);
+          image = Operations.convertToGrey (ImageIO.read(file));//Provisional
        } catch (IOException ex) {
             // handle exception...
        }
    }
 
    public ImagePanel(BufferedImage img) {
-      image = img;
+      image = Operations.convertToGrey (img);//Provisional
   }
 
    public void setImage(File file){
