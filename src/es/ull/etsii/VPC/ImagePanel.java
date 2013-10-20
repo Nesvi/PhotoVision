@@ -21,8 +21,8 @@ public class ImagePanel extends JPanel{
    
    public ImagePanel(File file) {
        try {                
-          //image = ImageIO.read(file);
-          image = Operations.convertToGrey (ImageIO.read(file));//Provisional
+          image = ImageIO.read(file);
+          //image = Operations.convertToGrey (ImageIO.read(file));//Provisional
           Operations.getAbsoluteHistogramData (image);
        } catch (IOException ex) {
             // handle exception...
