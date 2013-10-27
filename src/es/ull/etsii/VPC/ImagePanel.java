@@ -14,16 +14,25 @@ public class ImagePanel extends JPanel{
    private static final long serialVersionUID = 1L;
    
    private BufferedImage image;
+   String fileExtension;
 
    public ImagePanel(){
       image = null;
+      fileExtension = "";
    }
    
    public ImagePanel(File file) {
        try {                
-          //image = ImageIO.read(file);
-          image = Operations.convertToGrey (ImageIO.read(file));//Provisional
+          image = ImageIO.read(file);
+          //image = Operations.convertToGrey (ImageIO.read(file));//Provisional
           Operations.getAbsoluteHistogramData (image);
+
+          String fileName = file.getName(); 
+          int i = fileName.lastIndexOf('.');
+   	   	  if (i > 0) {
+   	   	     fileExtension = fileName.substring(i+1);
+   	      }
+	  
        } catch (IOException ex) {
             // handle exception...
        }
@@ -45,6 +54,11 @@ public class ImagePanel extends JPanel{
    public BufferedImage getImage(){
       return image;
    }
+   
+   public String getFileExtension(){
+	      return fileExtension;
+   }
+   
    @Override
    protected void paintComponent(Graphics g) {
        super.paintComponent(g);

@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -38,14 +39,18 @@ public class PhotoVision extends JFrame{
    
    private JDesktopPane desktop;
    
+   private JMenu mFilters;
+   
    public PhotoVision(){
-      controller = new Controller(this);
       
       initializeComponents();
       
+      controller = new Controller(this);
+      controller.initActions ();
+      
       setSize ( WSX, WSY );
       setDefaultCloseOperation ( EXIT_ON_CLOSE );
-      setTitle( "FotoReVisiÃ³n" );
+      setTitle( "FotoReVisión" );
       setLocationRelativeTo ( null );
       setVisible(true);
    }
@@ -74,6 +79,9 @@ public class PhotoVision extends JFrame{
       JMenu mFile = new JMenu("File");
       menuBar.add (mFile);
       
+      mFilters = new JMenu("Filters");
+      menuBar.add (mFilters);
+      
       JMenuItem mOpenFile = new JMenuItem("Open file");
       mFile.add (mOpenFile);
       mOpenFile.addActionListener (new ActionListener() {
@@ -84,10 +92,29 @@ public class PhotoVision extends JFrame{
    
    }
    
+   public void addImageFilterToMenu(final PVAction ifil){
+         
+      JMenuItem mf = new JMenuItem(ifil.name);
+      mFilters.add (mf);
+      
+      mf.addActionListener (new ActionListener() {
+         public void actionPerformed (ActionEvent arg0) {
+            ifil.execute();
+         }
+      });
+      
+   }
+   
    public void newImageInnerFrame(File file){
       ImagePanel panel = controller.newImagePanel (file);
       desktop.add (new InnerFrame ("Photo", panel));
-      absoluteHistogram(panel.getImage ());//Provisional
+      //controller.absoluteHistogram(panel.getImage ());//Provisional
+   }
+   
+   public void newImageInnerFrame(BufferedImage file){
+      ImagePanel panel = controller.newImagePanel (file);
+      desktop.add (new InnerFrame ("Photo", panel));
+      //controller.absoluteHistogram(panel.getImage ());//Provisional
    }
    
    public void newChartInnerFrame(BufferedImage img){
@@ -96,27 +123,15 @@ public class PhotoVision extends JFrame{
       desktop.add (chartFrame);
    }
    
-   public void absoluteHistogram(BufferedImage img){//Move to controller
-      /*
-      double[] chartData = new double[256];
-      for( int i = 0; i < 256; i++){
-	 chartData[i] = i*i;
-      }
-      */
-      double[] chartData = Operations.getAbsoluteHistogramData (img);
-      
-      Plot plot = Plots.newPlot(DataUtil.scale (chartData));
-      LineChart chart = GCharts.newLineChart(plot);
-      chart.setSize (300, 300);
-      
-      try {
-	 newChartInnerFrame (ImageIO.read(new URL(chart.toURLString ())));
-      } catch (MalformedURLException e) {
-	 e.printStackTrace();
-      } catch (IOException e) {
-	 e.printStackTrace();
-      }
-   
+   public void newInfoInnerFrame(String infoImage ){
+      //InnerFrame infoFrame = new InnerFrame ("Information", new ImagePanel (infoImage));
+      //infoFrame.setSize (300, 300);
+      //desktop.add (infoFrame);
+   	System.out.println(infoImage);
+   }
+
+   public JInternalFrame getSelectedWindow () {
+      return desktop.getSelectedFrame ();
    }
 
 }
