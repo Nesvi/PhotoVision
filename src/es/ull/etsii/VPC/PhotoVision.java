@@ -51,7 +51,7 @@ public class PhotoVision extends JFrame{
       
       setSize ( WSX, WSY );
       setDefaultCloseOperation ( EXIT_ON_CLOSE );
-      setTitle( "FotoReVisi�n" );
+      setTitle( "PhotoVision" );
       setLocationRelativeTo ( null );
       setVisible(true);
    }
