@@ -32,6 +32,7 @@ public class Controller {
       PVAction.setController (this);
       new ToGrayscale();
       new ImageInfo();
+      new LinealTransform ();
    }
    
    public void openFile(){

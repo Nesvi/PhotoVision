@@ -70,4 +70,20 @@ public class Operations {
  	return LOT;
    }
    
+   public static BufferedImage applyVout(BufferedImage image, int[] vout){
+   
+      BufferedImage copy = new BufferedImage (image.getWidth (), image.getHeight (), BufferedImage.TYPE_INT_ARGB);
+      
+      for( int i = 0; i < image.getWidth (); i++)
+	 for( int j = 0; j < image.getHeight (); j++){
+	    Color color = new Color (image.getRGB (i, j),true);
+	    int s = vout[color.getRed ()];
+	    //System.out.println(s);
+	    copy.setRGB (i, j, (new Color(s,s,s)).getRGB());
+	 
+	 }
+   
+      return copy;
+   }
+   
 }
