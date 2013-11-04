@@ -48,9 +48,12 @@ public class PhotoVision extends JFrame{
       controller = new Controller(this);
       controller.initActions ();
       
+      controller = new Controller(this);
+      controller.initActions ();
+      
       setSize ( WSX, WSY );
       setDefaultCloseOperation ( EXIT_ON_CLOSE );
-      setTitle( "FotoReVisión" );
+      setTitle( "FotoReVisi�n" );
       setLocationRelativeTo ( null );
       setVisible(true);
    }
@@ -121,6 +124,13 @@ public class PhotoVision extends JFrame{
       InnerFrame chartFrame = new InnerFrame ("Chart", new ImagePanel (img));
       chartFrame.setSize (300, 300);
       desktop.add (chartFrame);
+   }
+   
+   public void newInfoInnerFrame(String infoImage ){
+      //InnerFrame infoFrame = new InnerFrame ("Information", new ImagePanel (infoImage));
+      //infoFrame.setSize (300, 300);
+      //desktop.add (infoFrame);
+   	System.out.println(infoImage);
    }
 
    public JInternalFrame getSelectedWindow () {

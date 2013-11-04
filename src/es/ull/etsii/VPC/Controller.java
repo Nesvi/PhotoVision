@@ -30,15 +30,16 @@ public class Controller {
    
    public void initActions(){ //Here is where you add the actions to the system
       PVAction.setController (this);
-      new ToGrayscale();   
+      new ToGrayscale();
+      new ImageInfo();
    }
    
    public void openFile(){
       JFileChooser openFile = new JFileChooser();
       
       if( openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-	 File file = openFile.getSelectedFile ();
-	 view.newImageInnerFrame (file);
+         File file = openFile.getSelectedFile ();
+         view.newImageInnerFrame (file);
       }
    }
    
@@ -57,7 +58,7 @@ public class Controller {
    }
    
    public void convertToGrey(){
-	   
+           
    }
 
    public void addPVAction (PVAction imageFilter) {
@@ -74,11 +75,11 @@ public class Controller {
       chart.setSize (300, 300);
       
       try {
-	 view.newChartInnerFrame (ImageIO.read(new URL(chart.toURLString ())));
+         view.newChartInnerFrame (ImageIO.read(new URL(chart.toURLString ())));
       } catch (MalformedURLException e) {
-	 e.printStackTrace();
+         e.printStackTrace();
       } catch (IOException e) {
-	 e.printStackTrace();
+         e.printStackTrace();
       }
    
    }
@@ -91,5 +92,10 @@ public class Controller {
       view.newImageInnerFrame (Operations.convertToGrey (selectedImage));
       
    }
+   
+   public void getImageInfo (BufferedImage selectedImage) {
+   	view.newInfoInnerFrame(  Operations.getImageInfo (((ImagePanel)((InnerFrame)view.getSelectedWindow()).getPanel ()).getImage(), ((ImagePanel)((InnerFrame)view.getSelectedWindow()).getPanel ()).getFileExtension()));
+	      
+   }   
    
 }
