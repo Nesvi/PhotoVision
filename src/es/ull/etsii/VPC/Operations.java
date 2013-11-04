@@ -59,4 +59,15 @@ public class Operations {
    
    }
    
+   public static int[][] getLOT (BufferedImage img){
+ 	int [][] LOT = new int[img.getWidth()][img.getHeight()];
+ 	Color color;
+ 	for (int i = 0; i < img.getWidth(); i++)
+ 		for (int j = 0; j < img.getWidth(); j++){
+ 			color = new Color (img.getRGB (i, j),true);
+ 			LOT[i][j] = color.getRed();
+ 		}
+ 	return LOT;
+   }
+   
 }
