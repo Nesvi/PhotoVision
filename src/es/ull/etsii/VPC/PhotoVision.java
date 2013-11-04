@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import com.googlecode.charts4j.Data;
 import com.googlecode.charts4j.DataUtil;
@@ -44,9 +45,6 @@ public class PhotoVision extends JFrame{
    public PhotoVision(){
       
       initializeComponents();
-      
-      controller = new Controller(this);
-      controller.initActions ();
       
       controller = new Controller(this);
       controller.initActions ();
@@ -108,6 +106,12 @@ public class PhotoVision extends JFrame{
       
    }
    
+   public InnerFrame newInnerFrame(String title, JPanel in){
+      InnerFrame myInnerFrame = new InnerFrame (title, in);
+      desktop.add (new InnerFrame (title, in));
+      return myInnerFrame;
+   }
+   /*
    public void newImageInnerFrame(File file){
       ImagePanel panel = controller.newImagePanel (file);
       desktop.add (new InnerFrame ("Photo", panel));
@@ -132,7 +136,7 @@ public class PhotoVision extends JFrame{
       //desktop.add (infoFrame);
    	System.out.println(infoImage);
    }
-
+    */
    public JInternalFrame getSelectedWindow () {
       return desktop.getSelectedFrame ();
    }

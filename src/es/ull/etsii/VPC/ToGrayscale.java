@@ -1,5 +1,7 @@
 package es.ull.etsii.VPC;
 
+import java.awt.image.BufferedImage;
+
 import javax.swing.text.View;
 
 public class ToGrayscale extends PVAction{
@@ -11,7 +13,15 @@ public class ToGrayscale extends PVAction{
    @Override
    public void execute () {
       //controller.absoluteHistogram (controller.getSelectedImage ());
-      controller.convertToGrayscale(controller.getSelectedImage ());
+      convertToGrayscale(controller.getSelectedImage ());
+   }
+   
+   public void convertToGrayscale (BufferedImage selectedImage) {
+      controller.getView().newInnerFrame ("Photo",
+	    				  new ImagePanel(
+	    					Operations.convertToGrey (selectedImage)
+	    				  )
+	    				 );
    }
    
 }

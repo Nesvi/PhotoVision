@@ -39,7 +39,7 @@ public class Controller {
       
       if( openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
          File file = openFile.getSelectedFile ();
-         view.newImageInnerFrame (file);
+         view.newInnerFrame ("Photo", new ImagePanel(file));
       }
    }
    
@@ -75,7 +75,7 @@ public class Controller {
       chart.setSize (300, 300);
       
       try {
-         view.newChartInnerFrame (ImageIO.read(new URL(chart.toURLString ())));
+         view.newInnerFrame("Chart", new ImagePanel (ImageIO.read(new URL(chart.toURLString ())))).setSize (500, 500);
       } catch (MalformedURLException e) {
          e.printStackTrace();
       } catch (IOException e) {
@@ -87,15 +87,11 @@ public class Controller {
    public BufferedImage getSelectedImage () {
       return ((ImagePanel)((InnerFrame)view.getSelectedWindow()).getPanel ()).getImage ();
    }
-
-   public void convertToGrayscale (BufferedImage selectedImage) {
-      view.newImageInnerFrame (Operations.convertToGrey (selectedImage));
-      
-   }
    
-   public void getImageInfo (BufferedImage selectedImage) {
-   	view.newInfoInnerFrame(  Operations.getImageInfo (((ImagePanel)((InnerFrame)view.getSelectedWindow()).getPanel ()).getImage(), ((ImagePanel)((InnerFrame)view.getSelectedWindow()).getPanel ()).getFileExtension()));
-	      
-   }   
+    
+   
+   public PhotoVision getView(){
+      return view;
+   }
    
 }
