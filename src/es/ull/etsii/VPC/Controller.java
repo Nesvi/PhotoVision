@@ -32,6 +32,7 @@ public class Controller {
       PVAction.setController (this);
       new ToGrayscale();
       new ImageInfo();
+      new GammaCorrection();
    }
    
    public void openFile(){
@@ -92,6 +93,10 @@ public class Controller {
    
    public PhotoVision getView(){
       return view;
+   }
+   
+   public Vector<ImagePanel> getImages(){
+      return images;
    }
    
 }
