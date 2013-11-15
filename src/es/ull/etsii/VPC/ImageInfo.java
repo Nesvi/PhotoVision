@@ -19,7 +19,7 @@ public class ImageInfo extends PVAction{
    
    public void show (BufferedImage selectedImage) {
       JPanel myPanel = new JPanel();
-      myPanel.add(new JLabel(getImageInfo (selectedImage, "something")));
+      myPanel.add(new JLabel(getImageInfo (selectedImage, ((ImagePanel)((InnerFrame)controller.getView().getSelectedWindow()).getPanel ()).getFileExtension())));
       controller.getView().newInnerFrame("Info", myPanel);  
    }  
    

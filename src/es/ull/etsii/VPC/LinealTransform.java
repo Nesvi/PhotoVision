@@ -111,17 +111,24 @@ public class LinealTransform extends PVAction{
    }
    
    private int getColorTransformation(int color, int[] points){
-      for(int i = 0; i < points.length/2; i++){
-	if(color < points[i*2]){
-	   double dx = points[(i)*2] - points[(i-1)*2];
-	   double dy = points[(i)*2+1] - points[(i-1)*2+1];
-	   double m = dy/dx;
-	   
-	   int n = (int) (points[(i)*2+1] - points[(i)*2]*m); 
-	   return (int) (color*m + n);
-	}
-      }
-      return 0;
+	   double dx,dy;
+           for(int i = 0; i < points.length/2; i++){
+            		if(color <= points[i*2]){
+            			if (i == 0){
+            				dx = points[(i)*2] - points[(i+1)*2];
+            				dy = points[(i)*2+1] - points[(i+1)*2+1];
+            			}
+            			else{
+            				dx = points[(i)*2] - points[(i-1)*2];
+            				dy = points[(i)*2+1] - points[(i-1)*2+1];
+            			}
+            		   double m = dy/dx;
+            		   
+            		   int n = (int) (points[(i)*2+1] - points[(i)*2]*m); 
+            		   return (int) (color*m + n);
+            		}
+             }
+             return 0;
    }
    
 }

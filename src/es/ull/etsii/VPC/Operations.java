@@ -86,4 +86,29 @@ public class Operations {
       return copy;
    }
    
+   public static BufferedImage gammaCorrection (BufferedImage img, double gamma){
+      BufferedImage gammaImage = new BufferedImage (img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+      WritableRaster raster = gammaImage.getRaster ();
+            
+      int [][] LOT = getLOT (img);
+      int vIn;
+      double a;
+      double b;
+      int vOut;
+      Color newGrey;
+      int rgb;
+           
+      for (int i = 0; i < img.getWidth(); i++)
+	 for (int j = 0; j < img.getHeight(); j++){
+	    vIn = LOT[i][j];
+            a =((double)vIn)/255;
+            b = Math.pow(a, gamma);
+            vOut = (int)(b*255);
+            newGrey = new Color(vOut, vOut, vOut);
+            rgb = newGrey.getRGB();
+            gammaImage.setRGB(i, j, rgb);
+          }
+      return gammaImage;
+   }
+   
 }

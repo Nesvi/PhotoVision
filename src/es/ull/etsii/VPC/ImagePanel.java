@@ -22,21 +22,24 @@ public class ImagePanel extends JPanel{
    }
    
    public ImagePanel(File file) {
-       try {                
-          image = ImageIO.read(file);
-          //image = Operations.convertToGrey (ImageIO.read(file));//Provisional
-          Operations.getAbsoluteHistogramData (image);
+      try {                
+         image = ImageIO.read(file);
+         //image = Operations.convertToGrey (ImageIO.read(file));//Provisional
+         Operations.getAbsoluteHistogramData (image);
 
-          String fileName = file.getName(); 
-          int i = fileName.lastIndexOf('.');
-   	   	  if (i > 0) {
-   	   	     fileExtension = fileName.substring(i+1);
-   	      }
+         String fileName = file.getName(); 
+         fileExtension = file.getName();
+         fileExtension = fileExtension.replaceAll(".+\\.", "");
+         
+         /*int i = fileName.lastIndexOf('.');
+  	   	  if (i > 0) {
+  	   	     fileExtension = fileName.substring(i+1);
+  	      }*/
 	  
-       } catch (IOException ex) {
-            // handle exception...
-       }
-   }
+      } catch (IOException ex) {
+           // handle exception...
+      }
+  }
 
    public ImagePanel(BufferedImage img) {
       image = img;

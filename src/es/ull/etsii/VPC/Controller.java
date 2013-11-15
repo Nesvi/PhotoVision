@@ -33,6 +33,7 @@ public class Controller {
       new ToGrayscale();
       new ImageInfo();
       new LinealTransform ();
+      new GammaCorrection();
    }
    
    public void openFile(){
