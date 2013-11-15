@@ -1,6 +1,9 @@
 package es.ull.etsii.VPC;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +18,15 @@ public class ImagePanel extends JPanel{
    
    private BufferedImage image;
    String fileExtension;
-
+   
+   int x,y,color;
+   
+   private ImagePanel self;
+   
    public ImagePanel(){
       image = null;
-      fileExtension = "";
+      fileExtension = ""; 
+      self = this;
    }
    
    public ImagePanel(File file) {
@@ -39,6 +47,27 @@ public class ImagePanel extends JPanel{
       } catch (IOException ex) {
            // handle exception...
       }
+      self = this;
+      addMouseMotionListener (new MouseMotionListener() {
+         
+         @Override
+         public void mouseMoved (MouseEvent arg0) {
+            x = arg0.getX ();
+            y = arg0.getY ();
+            self.repaint ();
+            if( x < image.getWidth () && y < image.getHeight ())
+               color = (new Color(image.getRGB (x, y))).getRed ();
+            else
+               color = 0;
+            
+         }
+         
+         @Override
+         public void mouseDragged (MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+         }
+      });
   }
 
    public ImagePanel(BufferedImage img) {
@@ -48,7 +77,7 @@ public class ImagePanel extends JPanel{
    public void setImage(File file){
        try {                
           image = ImageIO.read(file);
-          invalidate();
+          self.repaint ();
        } catch (IOException ex) {
             // handle exception...
        }
@@ -66,7 +95,9 @@ public class ImagePanel extends JPanel{
    protected void paintComponent(Graphics g) {
        super.paintComponent(g);
        if(image != null)
-       g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters            
+       g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters   
+       g.drawString ("x= "+x+" ; y= "+y+" ; color= "+color, 0, image.getHeight ()+20);
    }
 
+   
 }
