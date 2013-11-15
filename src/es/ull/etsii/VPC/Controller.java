@@ -34,6 +34,7 @@ public class Controller {
       new ImageInfo();
       new LinealTransform ();
       new GammaCorrection();
+      new ROI ();
    }
    
    public void openFile(){
