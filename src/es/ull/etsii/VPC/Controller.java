@@ -39,6 +39,8 @@ public class Controller {
       InnerFrame.diff = new Diff();
       new AbsoluteHistogram ();
       new AccumulativeHistogram ();
+      InnerFrame.spec = new HistogramSpecification ();
+      new Equalization ();
    }
    
    public void openFile(){

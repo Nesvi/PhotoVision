@@ -15,7 +15,7 @@ public class Diff extends PVAction{
    @Override
    public void execute () {
       firstImage = controller.getSelectedImage ();
-      
+      SharedData.currentTool = 1;
    }
    
    public void secondImageSelected(){
@@ -29,6 +29,7 @@ public class Diff extends PVAction{
 	 
 	 firstImage = null;
       }
+      SharedData.currentTool = -1;
    
    }
    

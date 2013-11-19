@@ -6,7 +6,6 @@ public class AccumulativeHistogram extends PVAction{
 
    public AccumulativeHistogram () {
       super ("Accumulative Histogram");
-      // TODO Auto-generated constructor stub
    }
    
    @Override

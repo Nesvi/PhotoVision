@@ -14,6 +14,7 @@ public class InnerFrame extends JInternalFrame{
    private static final int WSX = 500;
    private static final int WSY = 500;
    public static Diff diff;
+   public static HistogramSpecification spec;
    
    private JPanel panel;
    
@@ -65,25 +66,16 @@ public class InnerFrame extends JInternalFrame{
          @Override
          public void internalFrameActivated (InternalFrameEvent arg0) {
             // TODO Auto-generated method stub
-            diff.secondImageSelected ();
+            switch(SharedData.currentTool){
+            case 1:
+            	diff.secondImageSelected ();
+            case 2: 
+               	spec.second();
+            }
             System.out.println ("Llego");
          }
       });
-      addFocusListener (new FocusListener() {
-         
-         @Override
-         public void focusLost (FocusEvent arg0) {
-            // TODO Auto-generated method stub
-            
-         }
-         
-         @Override
-         public void focusGained (FocusEvent arg0) {
-            // TODO Auto-generated method stub
-            diff.secondImageSelected ();
-            System.out.println ("Llego");
-         }
-      });
+      
    }
    
    public JPanel getPanel(){
