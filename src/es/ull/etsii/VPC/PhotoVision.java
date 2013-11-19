@@ -80,7 +80,7 @@ public class PhotoVision extends JFrame{
       JMenu mFile = new JMenu("File");
       menuBar.add (mFile);
       
-      mFilters = new JMenu("Filters");
+      mFilters = new JMenu("Tools");
       menuBar.add (mFilters);
       
       JMenuItem mOpenFile = new JMenuItem("Open file");

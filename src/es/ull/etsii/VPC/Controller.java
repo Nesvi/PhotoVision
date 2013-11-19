@@ -35,6 +35,10 @@ public class Controller {
       new LinealTransform ();
       new GammaCorrection();
       new ROI ();
+      new BrightnessContrast ();
+      InnerFrame.diff = new Diff();
+      new AbsoluteHistogram ();
+      new AccumulativeHistogram ();
    }
    
    public void openFile(){
@@ -72,6 +76,27 @@ public class Controller {
    public void absoluteHistogram(BufferedImage img){//Move to controller
 
       double[] chartData = Operations.getAbsoluteHistogramData (img);
+      
+      Plot plot = Plots.newPlot(DataUtil.scale (chartData));
+      LineChart chart = GCharts.newLineChart(plot);
+      chart.setSize (300, 300);
+      
+      try {
+         view.newInnerFrame("Chart", new ImagePanel (ImageIO.read(new URL(chart.toURLString ())))).setSize (500, 500);
+      } catch (MalformedURLException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   
+   }
+   
+   public void accumulativeHistogram(BufferedImage img){//Move to controller
+
+      double[] chartData = Operations.getAbsoluteHistogramData (img);
+      
+      for( int i = 1; i < 256; i++)
+	 chartData[i] = chartData[i] + chartData[i-1];
       
       Plot plot = Plots.newPlot(DataUtil.scale (chartData));
       LineChart chart = GCharts.newLineChart(plot);
