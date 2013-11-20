@@ -15,6 +15,7 @@ public class InnerFrame extends JInternalFrame{
    private static final int WSY = 500;
    public static Diff diff;
    public static HistogramSpecification spec;
+   public static DifferenceMap mapdiff;
    
    private JPanel panel;
    
@@ -71,8 +72,11 @@ public class InnerFrame extends JInternalFrame{
             	diff.secondImageSelected ();
             case 2: 
                	spec.second();
+            case 3:
+               	mapdiff.secondImageSelected ();
+            default:	
             }
-            System.out.println ("Llego");
+            
          }
       });
       

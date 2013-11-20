@@ -23,7 +23,7 @@ public class LinealTransform extends PVAction{
    }
    
    public void launchDialog(){
-      JFrame nopd = new JFrame ("Number of inner points:");
+      final JFrame nopd = new JFrame ("Number of inner points:");
       nopd.getContentPane ().setLayout (new BoxLayout(nopd.getContentPane (),BoxLayout.Y_AXIS));
       final JTextField box = new JTextField ("0",100);
       box.setMaximumSize( box.getPreferredSize() );
@@ -32,6 +32,7 @@ public class LinealTransform extends PVAction{
       button.addActionListener (new ActionListener() {
          public void actionPerformed (ActionEvent arg0) {
             insertPoints(Integer.parseInt (box.getText ()));
+            nopd.dispose();
          }
       });
       
@@ -44,7 +45,7 @@ public class LinealTransform extends PVAction{
    }
    
    public void insertPoints(final int points){
-      JFrame ip = new JFrame ("Insert points:");
+      final JFrame ip = new JFrame ("Insert points:");
       ip.getContentPane ().setLayout (new GridLayout (3+points+1, 2));
       
       final JTextField begin = new JTextField ("0");
@@ -54,8 +55,7 @@ public class LinealTransform extends PVAction{
       ip.add(new JLabel("y:"));
       ip.add(new JLabel("0"));
       ip.add(begin);
-      ip.add(new JLabel("255"));
-      ip.add(end);
+      
       
       final JTextField[] innerPoints = new JTextField[points*2];
       
@@ -65,6 +65,9 @@ public class LinealTransform extends PVAction{
 	 ip.add (innerPoints[i*2]);
 	 ip.add (innerPoints[i*2+1]);
       }
+      
+      ip.add(new JLabel("255"));
+      ip.add(end);
       
       JButton accept = new JButton("Accept");
       ip.add (accept);
@@ -84,7 +87,7 @@ public class LinealTransform extends PVAction{
             }
             
             applyLinearTransformation (output);
-            
+            ip.dispose ();
          }
       });
      

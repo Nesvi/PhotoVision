@@ -8,56 +8,32 @@ public class Equalization extends PVAction{
       super ("Equalization");
    }
    
-   public void execute()
-   {
+   public void execute(){
+      BufferedImage copia = new BufferedImage(controller.getSelectedImage ().getWidth (),controller.getSelectedImage ().getHeight (), BufferedImage.TYPE_INT_ARGB);
+      double size = copia.getWidth() * copia.getHeight();
+      double[] lut = Operations.getAbsoluteHistogramData (controller.getSelectedImage ());
       
-      double[] absoluteHistogramA = Operations.getAbsoluteHistogramData (controller.getSelectedImage ());
-      double[] absoluteHistogramB = new double[256];
+      for(int i = 1; i < 256; i++)
+	 lut[i] += lut[i-1];
       
-      int pixelsr = 0;
-      double[] linearHistogram =new double[256];
-      
-      for(int i = 0; i < 256; i++){
-	 linearHistogram[i] = 1;
-	 pixelsr += 1;
-      }
-      
-      absoluteHistogramB[0] = linearHistogram[0];
-      for(int i = 1; i < 256; i++){
-	 absoluteHistogramB[i] = absoluteHistogramB[i-1] + linearHistogram[i];	 
-      }
-      
-      int pixels = controller.getSelectedImage ().getHeight () * controller.getSelectedImage ().getWidth ();
-      
-      int M = 256;
-      double[] P0 = new double[256];
-      double[] Pr = new double[256];
-      
-      for(int i = 0; i < M; i++)
-	 P0[i] = absoluteHistogramA[i]/pixels;
-      for(int i = 0; i < M; i++)
-	 Pr[i] = absoluteHistogramB[i]/pixelsr;
-      
-      int[] T = new int[256];
-      
-      int j;
-      for( int a = 0; a < M; a++){
-	j = M-1;
-	do{
-	   
-	   T[a] = j;
-	   j--;
-	   
-	}while(j >= 0 && P0[a] <= Pr[j]);
-      
-      }
-      
-      BufferedImage copy ;
+      int[] vout = new int[256];
+      double m = 256;
+      //partimos la variedad de pixeles por la cantidad de pixeles
+      double var = m / size;
 
-      copy = Operations.applyVout (controller.getSelectedImage (), T);
+      //creamos la look up table para el valor de salida
+      for(int i = 0; i < m; i++) {
+              //realizamos el calculo de Vout segu la formula max[0, round(M/size * C0(Vin)) - 1]
+              int Vout = (int) Math.round((var * lut[i]) - 1);
+              if (Vout < 0) {
+                      Vout = 0;
+              }
+              vout[i] = Vout;
+      }
+      
       controller.getView().newInnerFrame ("Photo",
 		  new ImagePanel(
-			copy
+			Operations.applyVout (controller.getSelectedImage (), vout)
 		  )
 		 );
    }

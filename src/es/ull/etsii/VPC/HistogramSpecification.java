@@ -1,7 +1,8 @@
 package es.ull.etsii.VPC;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 
 
 public class HistogramSpecification extends PVAction{
@@ -42,7 +43,6 @@ public class HistogramSpecification extends PVAction{
       SharedData.currentTool = -1;
    }
    
-   
    private void histogramSpecification()
    {
       
@@ -69,12 +69,9 @@ public class HistogramSpecification extends PVAction{
       
       }
       
-      BufferedImage copy ;
-
-      copy = Operations.applyVout (originalImage, T);
       controller.getView().newInnerFrame ("Photo",
 		  new ImagePanel(
-			copy
+			Operations.applyVout (originalImage, T)
 		  )
 		 );
    }

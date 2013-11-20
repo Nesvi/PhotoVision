@@ -193,4 +193,90 @@ public class Operations {
  		}
  	return newImage;
  }
+ 
+ public static BufferedImage newSampling (BufferedImage img, int sample){
+    BufferedImage newImage = new BufferedImage (img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+    WritableRaster raster = newImage.getRaster ();
+          
+    int [][] LOT = getLOT (img);
+    int vIn;
+    double a;
+    double b;
+    int vOut;
+    Color newGrey;
+    int rgb;
+         
+    //for (int i = 0; i < (img.getWidth()-sample); i=i+sample)
+   //	 for (int j = 0; j < (img.getHeight()-sample); j=j+sample){
+    for (int i = 0; i < (img.getWidth()); i=i+sample)
+   	 for (int j = 0; j < (img.getHeight()); j=j+sample){
+   		 vIn = 0;
+   		 for (int r=0; r<sample; r++){
+   			 for (int s=0; s<sample; s++){
+				if (((i + r) < img.getWidth()) && ((j + s) < img.getHeight()))
+   				   vIn += LOT[i+r][j+s];
+   			 }
+   		 }
+   		 vOut = (int)(vIn/(sample*sample));
+          newGrey = new Color(vOut, vOut, vOut);
+          rgb = newGrey.getRGB();
+          newImage.setRGB(i, j, rgb);
+   		 for (int r=0; r<sample; r++){
+   			 for (int s=0; s<sample; s++)
+   			    if (((i + r) < img.getWidth()) && ((j + s) < img.getHeight()))
+   				 newImage.setRGB(i+r, j+s, rgb);
+   			 
+   		 }
+        }
+    return newImage;
+ }
+ 
+ 
+ public static BufferedImage newDigitalization (BufferedImage img, int bits){
+    BufferedImage newImage = new BufferedImage (img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+    WritableRaster raster = newImage.getRaster ();
+          
+    int [][] LOT = getLOT (img);
+    int vIn;
+    double a;
+    double b;
+    int vOut;
+    Color newGrey;
+    int rgb;
+    float conversor = 1;
+    float aux;
+    
+    if (bits == 1)
+   	 conversor = 255;
+    else if (bits == 2)
+   	 conversor = 85;
+    else if (bits == 3)
+   	 conversor = (float) 36.43;
+    else if (bits == 4)
+   	 conversor = 17;
+    else if (bits == 5)
+   	 conversor = (float) 8.22;
+    else if (bits == 6)
+   	 conversor = (float) 4.05;
+    else if (bits == 7)
+   	 conversor = (float) 2.01;
+    else if ((bits < 1)||(bits > 7))
+   	 conversor = 1;
+    
+    for (int i = 0; i < (img.getWidth()); i++)
+   	 for (int j = 0; j < (img.getHeight()); j++){
+   		 vIn = LOT[i][j];
+   		 aux = (float)vIn/conversor;
+   		 int aux2 = Math.round(aux);
+   		 aux = (float)aux2*conversor;
+   		 vOut = Math.round(aux);
+   		 
+  			newGrey = new Color(vOut, vOut, vOut);
+ 			rgb = newGrey.getRGB();
+ 			newImage.setRGB(i, j, rgb);
+   	 }
+    
+
+    return newImage;
+ }
 }

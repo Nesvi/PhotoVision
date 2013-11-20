@@ -26,6 +26,7 @@ public class Controller {
       view = fr;
       images = new Vector<ImagePanel>();
       imageFilters = new Vector<PVAction>();
+      SharedData.currentTool = -1;
    }
    
    public void initActions(){ //Here is where you add the actions to the system
@@ -41,6 +42,10 @@ public class Controller {
       new AccumulativeHistogram ();
       InnerFrame.spec = new HistogramSpecification ();
       new Equalization ();
+      new Digitalization();
+      new Sampling ();
+      InnerFrame.mapdiff = new DifferenceMap ();
+      
    }
    
    public void openFile(){
